@@ -23,7 +23,7 @@ export function main() {
 
     let contas: ContaController = new ContaController();
 
-    let opcao: number;
+    let opcao: number, numero: number;
     let nome: string, senha: string;
 
 
@@ -163,7 +163,7 @@ export function main() {
             case 5:
                 console.log('\n**** Acessar Contas ****');
 
-                let numero = readlinesync.questionInt('Digite o numero da conta: ');
+                numero = readlinesync.questionInt('Digite o numero da conta: ');
                 contas.procurarPorNumero(numero); 
 
                 keyPress();
@@ -189,15 +189,12 @@ export function main() {
                     let emailNovo = readlinesync.questionEMail('Digite seu novo e-mail: ');
                     senha = readlinesync.question('Digite sua nova senha: ', { hideEchoBack: true, mask: '-' });
 
-                    try {
-                        conta.nome = nome;
-                        conta.email = emailNovo;
-                        conta.senha = senha;
-                        contas.atualizar(conta);
-                        console.log('\n✅ Cadastro atualizado com sucesso!');
-                    } catch (error: any) {
-                        console.log(colors.fg.red, `Erro ao atualizar: ${error.message}`, colors.reset);
-                    }
+                try {
+                    const conta = new Estudante(numeroAtualizar, emailNovo, senha, nome);
+                    contas.atualizar(conta);
+                } catch (error: any) {
+                    console.log(colors.fg.red, `Erro ao atualizar: ${error.message}`, colors.reset);
+                }
                 } else {
                     console.log(`\nConta número ${numeroAtualizar} não foi encontrada`);
                 }
